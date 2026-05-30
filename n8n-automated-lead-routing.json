@@ -1,0 +1,180 @@
+{
+  "name": "My workflow",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "agency-form",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "e140c88a-f4de-47cd-90aa-71b83c98a280",
+      "name": "Webhook - Form Pendaftaran",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 1,
+      "position": [
+        -736,
+        128
+      ],
+      "webhookId": "agency-form-webhook"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 1
+          },
+          "conditions": [
+            {
+              "id": "paket-check",
+              "leftValue": "=",
+              "rightValue": "premium",
+              "operator": {
+                "type": "string",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "and"
+        },
+        "options": {}
+      },
+      "id": "ab792321-2bf8-4ee4-899c-372c1417256c",
+      "name": "IF - Cek Paket",
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2,
+      "position": [
+        -304,
+        128
+      ]
+    },
+    {
+      "parameters": {
+        "authentication": "serviceAccount",
+        "operation": "append",
+        "documentId": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        },
+        "sheetName": {
+          "__rl": true,
+          "mode": "list",
+          "value": ""
+        }
+      },
+      "type": "n8n-nodes-base.googleSheets",
+      "typeVersion": 4.7,
+      "position": [
+        -512,
+        128
+      ],
+      "id": "71aed671-1b00-4ddf-a689-479a3a1d1381",
+      "name": "Append row in sheet",
+      "credentials": {
+        "googleApi": {
+          "id": "8bKIVkBTWpOCHgrS",
+          "name": "N8N2_project"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.telegram",
+      "typeVersion": 1.2,
+      "position": [
+        -16,
+        16
+      ],
+      "id": "31c0dbc9-ac54-467b-adc2-f9c7c9307f93",
+      "name": "Send a text message",
+      "webhookId": "e68f1e42-3a22-4e0a-b7aa-e1444515d812",
+      "credentials": {
+        "telegramApi": {
+          "id": "UK782D8blE8Nlljt",
+          "name": "Telegram account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "n8n-nodes-base.emailSend",
+      "typeVersion": 2.1,
+      "position": [
+        -16,
+        240
+      ],
+      "id": "272688a0-81a8-4ac3-934d-2144f92c9ffc",
+      "name": "Send an Email1",
+      "webhookId": "dbaeb51c-c21f-44db-b5ad-85a52197184b",
+      "credentials": {
+        "smtp": {
+          "id": "bxPgXCuSEv70zCJ2",
+          "name": "SMTP account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook - Form Pendaftaran": {
+      "main": [
+        [
+          {
+            "node": "Append row in sheet",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "IF - Cek Paket": {
+      "main": [
+        [
+          {
+            "node": "Send a text message",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send an Email1",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Append row in sheet": {
+      "main": [
+        [
+          {
+            "node": "IF - Cek Paket",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "binaryMode": "separate"
+  },
+  "versionId": "5a325919-6dd5-4616-a7c7-db7ef49a80d8",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8142d21413ce389e9d659c31c4c0179057889b5a15d910c0c721213f7f734301"
+  },
+  "id": "hzgxoMOCWC5n5aJK",
+  "tags": []
+}
