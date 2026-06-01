@@ -1,26 +1,45 @@
-# n8n Automated Lead Routing System for Ad Consultancy
+# Automated Lead Routing System for Ad Consultancy
 
-An automated backend workflow built with n8n to streamline lead management for an advertising consultancy agency. This system eliminates manual data entry, decreases lead response time, and ensures high-intent leads are instantly routed.
-
----
-
-## 📊 Business Impact & Results
-* **Response Time:** Reduced lead routing time from several hours to **under 2 minutes** (instant).
-* **Efficiency:** Initially, the admin had to check each incoming order one by one and manually filter which customers were premium and which were regular customers to adjust the packages that could be accessed by customers. With this system, the company can eliminate manual administrative work by automating the data entry flow..
-* **Lead Automation:** Automatically captures and processes data right after form submission.
+An automation prototype designed to eliminate manual lead screening 
+bottlenecks in advertising consultancy operations — enabling instant, 
+tier-based client routing from form submission to delivery.
 
 ---
 
-## 🛠️ Integrated Tools & Nodes
-* **n8n Webhook Node (`Webhook - Form Pendaftaran`)** – Captures incoming lead registration data in real-time.
-* **n8n Switch / If Node** – Evaluates and filters lead data based on pre-defined conditions or criteria.
-* **Automated Actions** – Routes and updates the filtered data into the target destination system.
+## Problem
+In many ad consultancies, every inbound lead is manually reviewed by 
+an admin before receiving a response — creating delays that risk 
+losing potential clients.
 
----
+## Solution
+A multi-tier automated workflow built in n8n that filters and routes 
+leads instantly based on budget and service tier, without any manual 
+intervention.
 
-## 🚀 How to Use / Import This Workflow
-1. Download the `n8n-automated-lead-routing.json` file from this repository.
-2. Open your n8n instance.
-3. Create a new workflow, click on the **three dots** on the top right corner, and select **Import from File**.
-4. Upload the downloaded JSON file.
-5. Configure your own credentials or webhooks for each node and activate the workflow.
+## Workflow Architecture
+1. **Webhook - Form Pendaftaran** — Captures incoming lead data in real-time upon form submission
+2. **Google Sheets - Simpan Data** — Automatically logs lead information into a centralized spreadsheet
+3. **IF - Cek Paket** — Evaluates lead tier based on budget and service needs
+4. **Telegram - Notif Admin Premium** — Instantly notifies admin for high-intent premium leads
+5. **Send an Email** — Automatically delivers digital materials or scheduling links to the regular client
+
+![Workflow Overview](Workflow_Design.png)
+
+## Tech Stack
+- n8n (workflow automation)
+- Google Sheets API
+- Telegram API
+- Gmail API
+- Webhooks
+
+## How to Use
+1. Download `n8n-automated-lead-routing.json`
+2. Open your n8n instance
+3. Click on the three dots (top right) → **Import from File**
+4. Upload the JSON file
+5. Configure your own credentials for each node and activate the workflow
+
+## Disclaimer
+All data shown in this workflow is fictional and used for demonstration 
+purposes only. This is an independent prototype and has not been 
+implemented by any specific company.
